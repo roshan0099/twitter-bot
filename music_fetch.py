@@ -70,11 +70,5 @@ class Spotify :
 
 
 
-# spotify = Spotify()
-
-# jam = spotify.getting_album_id(["position"])
-# print(jam)
-# tracks = spotify.getting_tracks_from_album(jam)
-# print(",".join(tracks))
 
 
