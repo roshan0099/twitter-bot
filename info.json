@@ -1,0 +1,27 @@
+{
+	"texts" :[
+
+
+		
+		{
+			"pattern":["how are you", "wassup","cool", "doing","up"],
+			"response" : ["not bad !!", "i am fine!!","nothing much going around man","aaah so hot thats how it's, fookin global warming "] 
+
+
+		},
+
+		{
+			"pattern":["your name", "name?","name ?","name","call","hi"],
+			"response" : ["hi, i am malec!!!", "hi, call me Malec!!","hi, this is Malec here","hi, Malec yo"] 
+
+
+		},
+
+		{
+			"pattern" : [],
+			"response" : ["oops, couldnt understand ", "something went wrong ", "-_- server down, try again later "]
+
+		}
+
+	]
+}
