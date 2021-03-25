@@ -4,7 +4,7 @@ from time import sleep
 from name_fetch import Human
 import requests
 import os
-
+from fetch_id import Fetch_id
 from pytube import YouTube
 from PyDictionary import PyDictionary
 
@@ -16,6 +16,15 @@ def yt_download(url) :
 	yt = YouTube(url)
 
 
+
+#twitter word extracter
+def tweet_word(text):
+	sam = text.split()
+	jam = sam[1]
+
+	list_werd = list(jam.strip())
+
+	return "".join(list_werd[list_werd.index('v')+2:])
 
 #function to extract meaning of a particulear word 
 def dict_meaning(word):
@@ -153,14 +162,22 @@ def main_core_loop(mention_info,FILE,api,fs) :
 
 			elif "#yt" in tweet :
 
-					if "https://www.youtube.com" in tweet :
+					if "www.youtube.com" in tweet :
 
-						word = tweet.split()
+						word = tweet_word(tweet_word)
 						# extract_vid = Fetch_id()
 						# vid_id = extract_vid.fetch(" ".join(word))
 						
-						api.update_status(status = f"😓 hope this works  : https://ytdl0099.herokuapp.com/key={word[2][32:]} \n PS : try this on browser 🤖",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
+						api.update_status(status = f"😓 hope this works  : https://ytdl0099.herokuapp.com/key={word} \n PS : try this on browser 🤖",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
+					elif "download" in tweet :
 
+						word = extract_name(tweet,"download","#yt")
+						class_id = Fetch_id()
+						id_vid = class_id.fetch(word)
+						api.update_status(status = f"😓 hope this works  : {id_vid} \n PS : try this on browser 🤖",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
+
+
+						
 					else :
 						api.update_status(status = f"oops..try including the whole link",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)	
 			else :
@@ -185,6 +202,7 @@ def main() :
 	consumer_secret = os.environ.get('CONSUMER_SECRET')
 	access_token = os.environ.get('ACCESS_TOKEN')
 	access_token_secret = os.environ.get('ACCESS_TOKEN_SECRET')
+	print("consumer_key : ", consumer_key,"\ncSecret",consumer_secret,"\naToken",access_token,"\natc",access_token_secret)
 
 	#assigning the OAuth 
 	auth = tweepy.OAuthHandler(consumer_key,consumer_secret)
@@ -211,7 +229,7 @@ def main() :
 		sleep(20)
 
 
-# text = "@call_meanytime meaning of cut #dict"
+text = "@call_meanytime download https://www.youtube.com/watch?v=1DpH-icPpl0 #yt"
 # jam = extract_name(text,"of","#dict")
 
 
@@ -221,8 +239,6 @@ def main() :
 # print(dirname)
 # print("sup")
 
-# sam = text.split()
-# print(sam[1][32:])
 
 if __name__ == '__main__':
 	main()
