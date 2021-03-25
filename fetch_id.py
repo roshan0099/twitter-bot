@@ -30,4 +30,4 @@ class Fetch_id :
 			print(soup)
 			return soup.body.div.string
 		except :
-			return(["ooops an exception has occured"])	
+			return(["ooops an exception has occured"])

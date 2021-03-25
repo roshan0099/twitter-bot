@@ -4,7 +4,7 @@ from time import sleep
 from name_fetch import Human
 import requests
 import os
-from fetch_id import Fetch_id
+
 from pytube import YouTube
 from PyDictionary import PyDictionary
 
@@ -158,7 +158,7 @@ def main_core_loop(mention_info,FILE,api,fs) :
 						word = tweet.split()
 						# extract_vid = Fetch_id()
 						# vid_id = extract_vid.fetch(" ".join(word))
-						api.update_status(status = f"😓 hope this works  : https://ytdl0099.herokuapp.com/key={sam[2][32:]} \n PS : try this on browser 🤖",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
+						api.update_status(status = f"😓 hope this works  : https://ytdl0099.herokuapp.com/key={word[2][32:]} \n PS : try this on browser 🤖",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
 			else :
 				#to give out random text based on the tweet
 				#like hai, whats your name or simple just oops, error or something
@@ -217,11 +217,11 @@ def main() :
 # print(dirname)
 # print("sup")
 
-sam = text.split()
-print(sam[1][32:])
+# sam = text.split()
+# print(sam[1][32:])
 
-# if __name__ == '__main__':
-# 	main()
+if __name__ == '__main__':
+	main()
 
 
  
