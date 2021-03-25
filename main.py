@@ -155,10 +155,10 @@ def main_core_loop(mention_info,FILE,api,fs) :
 
 					if "https://www.youtube.com" in tweet :
 
-						word = text.split()
+						word = tweet.split()
 						# extract_vid = Fetch_id()
 						# vid_id = extract_vid.fetch(" ".join(word))
-						api.update_status(status = f"😓 hope this works  : https://ytdl0099.herokuapp.com/key={sam[1][32:]} \n PS : try this on browser 🤖",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
+						api.update_status(status = f"😓 hope this works  : https://ytdl0099.herokuapp.com/key={sam[2][32:]} \n PS : try this on browser 🤖",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
 			else :
 				#to give out random text based on the tweet
 				#like hai, whats your name or simple just oops, error or something
@@ -204,7 +204,7 @@ def main() :
 		# for index,info in enumerate(mention_info) :
 		# 	print(info.id_str)
 		main_core_loop(mention_info,FILE,api,fs)
-		sleep(40)
+		sleep(20)
 
 
 # text = "@call_meanytime meaning of cut #dict"
