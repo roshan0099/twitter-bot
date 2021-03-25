@@ -152,10 +152,13 @@ def main_core_loop(mention_info,FILE,api,fs) :
 					api.update_status(status = "These words kinda mean the same thing => " + ", ".join(meanings),in_reply_to_status_id = info.id,auto_populate_reply_metadata=True) 		
 
 			elif "#yt" in tweet :
-					word = extract_name(tweet,'download','#yt')
-					extract_vid = Fetch_id()
-					vid_id = extract_vid.fetch(" ".join(word))
-					api.update_status(status = f"Sorry for the delay 😓 hope this works  : https://ytdl0099.herokuapp.com/key={vid_id} \n PS : try this on browser 🤖",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
+
+					if "https://www.youtube.com" in tweet :
+
+						word = text.split()
+						# extract_vid = Fetch_id()
+						# vid_id = extract_vid.fetch(" ".join(word))
+						api.update_status(status = f"😓 hope this works  : https://ytdl0099.herokuapp.com/key={sam[1][32:]} \n PS : try this on browser 🤖",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
 			else :
 				#to give out random text based on the tweet
 				#like hai, whats your name or simple just oops, error or something
@@ -214,8 +217,11 @@ def main() :
 # print(dirname)
 # print("sup")
 
-if __name__ == '__main__':
-	main()
+sam = text.split()
+print(sam[1][32:])
+
+# if __name__ == '__main__':
+# 	main()
 
 
  
