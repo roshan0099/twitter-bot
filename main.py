@@ -98,76 +98,76 @@ def main_core_loop(mention_info,FILE,api,fs) :
 	for index,info in enumerate(mention_info) :
 		tweet = info.full_text.lower()
 	
-		# try :
-		if index == 0 :
-			last_seen(FILE,info.id_str)
+		try :
+			if index == 0 :
+				last_seen(FILE,info.id_str)
 
-		if "#beta" in  tweet :
+			if "#beta" in  tweet :
 
-			#condition to check if asked is for recommendation or not 
-			if "recommendations" in tweet or "recommend" in tweet or "suggest" in tweet :
-				recommended_tracks = recommendations()
-				api.update_status(status = "I have found these for you 🕵 : "+", ".join(recommended_tracks),in_reply_to_status_id = info.id,auto_populate_reply_metadata=True) 
-			
-			#if not it assumes what asked for is top ten tracks
-			elif "from" in tweet:
-				album_name = extract_name(tweet,'from','#beta')
-				tracks = tracks_from_album(album_name)
-				api.update_status(status = "here are some of em 🕺 : "+", ".join(tracks),in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
-			else :	
-				artist = extract_name(tweet,'of','#beta')
-			
+				#condition to check if asked is for recommendation or not 
+				if "recommendations" in tweet or "recommend" in tweet or "suggest" in tweet :
+					recommended_tracks = recommendations()
+					api.update_status(status = "I have found these for you 🕵 : "+", ".join(recommended_tracks),in_reply_to_status_id = info.id,auto_populate_reply_metadata=True) 
+				
+				#if not it assumes what asked for is top ten tracks
+				elif "from" in tweet:
+					album_name = extract_name(tweet,'from','#beta')
+					tracks = tracks_from_album(album_name)
+					api.update_status(status = "here are some of em 🕺 : "+", ".join(tracks),in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
+				else :	
+					artist = extract_name(tweet,'of','#beta')
+				
 
-				tracks = spotify.getting_top_tracks(" ".join(artist))
+					tracks = spotify.getting_top_tracks(" ".join(artist))
 
-				api.update_status(status ="Here are the top 5 tracks : "+ ", ".join(tracks),in_reply_to_status_id = info.id,auto_populate_reply_metadata=True) 	
+					api.update_status(status ="Here are the top 5 tracks : "+ ", ".join(tracks),in_reply_to_status_id = info.id,auto_populate_reply_metadata=True) 	
+					
+
+
+			elif "#info" in tweet	:
+				
+				reply = """hey 🙋‍♂️ \nThe bot works with  
+											keywords and hastags. You want recommendations ? use the keyword recommend/suggest/recommendations with
+											#beta at the end (dont forget the hash tag 😿) \n\n
+											eg : yo, 'recommend'some tracks #beta => remember 'recommend' and '#beta'😏"""
+
+										
+				api.update_status(status = reply ,in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
+				
+
 				
 
 
-		elif "#info" in tweet	:
-			
-			reply = """hey 🙋‍♂️ \nThe bot works with  
-										keywords and hastags. You want recommendations ? use the keyword recommend/suggest/recommendations with
-										#beta at the end (dont forget the hash tag 😿) \n\n
-										eg : yo, 'recommend'some tracks #beta => remember 'recommend' and '#beta'😏"""
+			elif "#dict" in tweet :
 
-									
-			api.update_status(status = reply ,in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
-			
-
-			
-
-
-		elif "#dict" in tweet :
-
-			if "meaning" in tweet :
+				if "meaning" in tweet :
+					
+					word = extract_name(tweet,'of','#dict')
+					meanings = dict_meaning(" ".join(word))
+					api.update_status(status = f"I think {' '.join(word)} means 🤔  " + ", ".join(meanings),in_reply_to_status_id = info.id,auto_populate_reply_metadata=True) 				
 				
-				word = extract_name(tweet,'of','#dict')
-				meanings = dict_meaning(" ".join(word))
-				api.update_status(status = f"I think {' '.join(word)} means 🤔  " + ", ".join(meanings),in_reply_to_status_id = info.id,auto_populate_reply_metadata=True) 				
-			
-			elif "synonym" in tweet or "synonyms" in tweet :
-				word = extract_name(tweet,'of','#dict')
-				meanings = dict_synonym(" ".join(word))
-				api.update_status(status = "These words kinda mean the same thing => " + ", ".join(meanings),in_reply_to_status_id = info.id,auto_populate_reply_metadata=True) 		
+				elif "synonym" in tweet or "synonyms" in tweet :
+					word = extract_name(tweet,'of','#dict')
+					meanings = dict_synonym(" ".join(word))
+					api.update_status(status = "These words kinda mean the same thing => " + ", ".join(meanings),in_reply_to_status_id = info.id,auto_populate_reply_metadata=True) 		
 
-		elif "#yt" in tweet :
-				word = extract_name(tweet,'download','#yt')
-				extract_vid = Fetch_id()
-				vid_id = extract_vid.fetch(" ".join(word))
-				api.update_status(status = f"Sorry for the delay 😓 hope this works  : https://ytdl0099.herokuapp.com/key={vid_id} \n PS : try this on browser 🤖",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
-		else :
-			#to give out random text based on the tweet
-			#like hai, whats your name or simple just oops, error or something
-			response = Human()
-			text = response.response_text(tweet)
-			print(text)
-			api.update_status(status = text,in_reply_to_status_id = info.id_str,auto_populate_reply_metadata=True) 
+			elif "#yt" in tweet :
+					word = extract_name(tweet,'download','#yt')
+					extract_vid = Fetch_id()
+					vid_id = extract_vid.fetch(" ".join(word))
+					api.update_status(status = f"Sorry for the delay 😓 hope this works  : https://ytdl0099.herokuapp.com/key={vid_id} \n PS : try this on browser 🤖",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
+			else :
+				#to give out random text based on the tweet
+				#like hai, whats your name or simple just oops, error or something
+				response = Human()
+				text = response.response_text(tweet)
+				print(text)
+				api.update_status(status = text,in_reply_to_status_id = info.id_str,auto_populate_reply_metadata=True) 
 
 
 			
-		# except :
-		# 	api.update_status(status = "oops an excpetion has occured, will get back to you soon",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True) 
+		except :
+			api.update_status(status = "oops an excpetion has occured, will get back to you soon",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True) 
 	fs.close()
 
 
