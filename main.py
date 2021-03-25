@@ -158,7 +158,11 @@ def main_core_loop(mention_info,FILE,api,fs) :
 						word = tweet.split()
 						# extract_vid = Fetch_id()
 						# vid_id = extract_vid.fetch(" ".join(word))
+						
 						api.update_status(status = f"😓 hope this works  : https://ytdl0099.herokuapp.com/key={word[2][32:]} \n PS : try this on browser 🤖",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
+
+					else :
+						api.update_status(status = f"oops..try including the whole link",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)	
 			else :
 				#to give out random text based on the tweet
 				#like hai, whats your name or simple just oops, error or something
