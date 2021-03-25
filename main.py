@@ -2,10 +2,47 @@ import tweepy
 from music_fetch import Spotify
 from time import sleep
 from name_fetch import Human
+import requests
 import os
+from fetch_id import Fetch_id
+from pytube import YouTube
+from PyDictionary import PyDictionary
+
+#creating an instance 
+dictionary = PyDictionary()
+
+#function to download yt videos
+def yt_download(url) :
+	yt = YouTube(url)
 
 
-global id_maintainer
+
+#function to extract meaning of a particulear word 
+def dict_meaning(word):
+	meaning = dictionary.meaning(word)
+
+	if "Verb" in list(meaning.keys()):
+		if len(meaning["Verb"]) > 3 :
+			return meaning["Verb"][:3]
+		else :
+			return meaning["Verb"]	
+
+	else :
+		print(meaning)
+		if len(meaning["Noun"]) > 3 :
+			return meaning["Noun"][:3]
+		else :
+			return meaning["Noun"]	
+							
+#extrxt synonym from the given word
+def dict_synonym(word) :
+	synonym = dictionary.synonym(word)
+
+	if len(synonym) > 4 : 
+		return synonym[:4]
+	else :
+		return synonym	
+
 # function to take in last seen id and also to return it 
 def last_seen(FILE,id = 0) :
 	if id != 0 :
@@ -18,14 +55,16 @@ def last_seen(FILE,id = 0) :
 		return int(f.read())
 
 #function to extract the name of the artist from the sentence 
-def extract_name(text,limit):
+def extract_name(text,limit,hash_tag):
 	#converting it into list
 	name =[]
 	name_list = text.split()
+	
 	split = name_list.index(limit)
+
 	for i in range(split +1,len(name_list)):
 		name.append(name_list[i])
-	name.remove('#beta')		
+	name.remove(hash_tag)		
 	return(name)
 
 #function to iterate through the generator and extract the recommendations 
@@ -72,11 +111,11 @@ def main_core_loop(mention_info,FILE,api,fs) :
 			
 			#if not it assumes what asked for is top ten tracks
 			elif "from" in tweet:
-				album_name = extract_name(tweet,'from')
+				album_name = extract_name(tweet,'from','#beta')
 				tracks = tracks_from_album(album_name)
 				api.update_status(status = "here are some of em 🕺 : "+", ".join(tracks),in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
 			else :	
-				artist = extract_name(tweet,'of')
+				artist = extract_name(tweet,'of','#beta')
 			
 
 				tracks = spotify.getting_top_tracks(" ".join(artist))
@@ -96,13 +135,33 @@ def main_core_loop(mention_info,FILE,api,fs) :
 			api.update_status(status = reply ,in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
 			
 
+			
 
 
+		elif "#dict" in tweet :
+
+			if "meaning" in tweet :
+				
+				word = extract_name(tweet,'of','#dict')
+				meanings = dict_meaning(" ".join(word))
+				api.update_status(status = f"I think {' '.join(word)} means 🤔  " + ", ".join(meanings),in_reply_to_status_id = info.id,auto_populate_reply_metadata=True) 				
+			
+			elif "synonym" in tweet or "synonyms" in tweet :
+				word = extract_name(tweet,'of','#dict')
+				meanings = dict_synonym(" ".join(word))
+				api.update_status(status = "These words kinda mean the same thing => " + ", ".join(meanings),in_reply_to_status_id = info.id,auto_populate_reply_metadata=True) 		
+
+		elif "#yt" in tweet :
+				word = extract_name(tweet,'download','#yt')
+				extract_vid = Fetch_id()
+				vid_id = extract_vid.fetch(" ".join(word))
+				api.update_status(status = f"Sorry for the delay 😓 hope this works  : https://ytdl0099.herokuapp.com/key={vid_id} \n PS : try this on browser 🤖",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
 		else :
 			#to give out random text based on the tweet
 			#like hai, whats your name or simple just oops, error or something
 			response = Human()
 			text = response.response_text(tweet)
+			print(text)
 			api.update_status(status = text,in_reply_to_status_id = info.id_str,auto_populate_reply_metadata=True) 
 
 
@@ -145,7 +204,18 @@ def main() :
 		sleep(40)
 
 
+# text = "@call_meanytime meaning of cut #dict"
+# jam = extract_name(text,"of","#dict")
+
+
+# print(" ".join(jam))
+
+# dirname = os.path.dirname("Procfile")
+# print(dirname)
+# print("sup")
+
 if __name__ == '__main__':
 	main()
+
 
  
