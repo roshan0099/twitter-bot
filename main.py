@@ -4,7 +4,7 @@ from time import sleep
 from name_fetch import Human
 import requests
 import os
-from fetch_id import Fetch_id
+# from fetch_id import Fetch_id
 from pytube import YouTube
 from PyDictionary import PyDictionary
 
@@ -169,12 +169,12 @@ def main_core_loop(mention_info,FILE,api,fs) :
 						# vid_id = extract_vid.fetch(" ".join(word))
 						
 						api.update_status(status = f"😓 hope this works  : https://ytdl0099.herokuapp.com/key={word} \n PS : try this on browser 🤖",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
-					elif "download" in tweet :
+					# elif "download" in tweet :
 
-						word = extract_name(tweet,"download","#yt")
-						class_id = Fetch_id()
-						id_vid = class_id.fetch(word)
-						api.update_status(status = f"😓 hope this works  : {id_vid} \n PS : try this on browser 🤖",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
+					# 	word = extract_name(tweet,"download","#yt")
+					# 	class_id = Fetch_id()
+					# 	id_vid = class_id.fetch(word)
+					# 	api.update_status(status = f"😓 hope this works  : {id_vid} \n PS : try this on browser 🤖",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
 
 
 						
