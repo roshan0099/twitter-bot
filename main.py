@@ -174,8 +174,11 @@ def main_core_loop(mention_info,FILE,api,fs) :
 						word = extract_name(tweet,"download","#yt")
 						class_id = Fetch_id()
 						id_vid = class_id.fetch(word)
-						api.update_status(status = f"😓 hope this works  : {id_vid} \n PS : try this on browser 🤖",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
 
+						if "ooops an exception has occured" in id_vid
+							api.update_status(status = f"{" ".join(id_vid)}",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)
+						else : 
+							api.update_status(status = f"😓 hope this works  : {id_vid} \n PS : try this on browser 🤖",in_reply_to_status_id = info.id,auto_populate_reply_metadata=True)		
 
 						
 					else :
