@@ -5,16 +5,20 @@
 		
 		{
 			"pattern":["how are you", "wassup","cool", "doing","up"],
-			"response" : ["not bad !!", "i am fine!!","nothing much going around man","aaah so hot thats how it's, fookin global warming "] 
+			"response" : ["not bad !!", "i am fine!!","nothing much going around","trying to keep everything cool"] 
 
 
 		},
 
 		{
 			"pattern":["your name", "name?","name ?","name","call","hi"],
-			"response" : ["hi, i am malec!!!", "hi, call me Malec!!","hi, this is Malec here","hi, Malec yo"] 
+			"response" : ["hi, i am CMAT!!!", "hi, call me CMAT or anytime lol!!","hi, this is CMAT here","hi, this is  CMAT => call me anytime in case ypure wondering "] 
 
 
+		},
+		{
+			"pattern" : ["use ?","made for what ?", "use case","what are you made for"],
+			"response" : ["I'm a bot that helps you to gigure out music and english", "#info, #beta,#dict,#yt try out these hashtags","use me as a yt downloader and a music guru","hmm...trying to help you out with music and english"]
 		},
 
 		{
